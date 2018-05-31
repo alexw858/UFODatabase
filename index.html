@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>UFO Data</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"
+  />
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="jumbotron">
+        <h1>UFO Sightings</h1> 
+        <p>Browse reports of UFO sightings by date, city, state, country, shape, and duration.</p> 
+    </div>
+    <div class="row">
+      <!-- <div class="col-md-4"> -->
+        <div class="form-group">
+          <input type="text" class="form-control col-md-4" id="date" placeholder="Date">
+          <input type="text" class="form-control col-md-4" id="city" placeholder="City">
+          <input type="text" class="form-control col-md-4" id="state" placeholder="State">
+          <input type="text" class="form-control col-md-4" id="country" placeholder="Country">
+          <input type="text" class="form-control col-md-4" id="shape" placeholder="Shape">
+          <input type="text" class="form-control col-md-4" id="durationMinutes" placeholder="Duration in Minutes">
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+          <a id="search" class="btn btn-default col-md-3">Search</a>
+        </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>City</th>
+              <th>State</th>
+              <th>Country</th>
+              <th>Shape</th>
+              <th>Duration in Minutes</th>
+              <th>Comments</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </div>
+      <!-- pagination stuff -->
+      <nav aria-label="Page navigation">
+            <ul class="pagination">
+              <li>
+                <a href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">4</a></li>
+              <li><a href="#">5</a></li>
+              <li>
+                <a href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+
+  </div>
+  <script src="https://d3js.org/d3.v4.min.js"></script> 
+  <script src="Data/data.js" type="text/javascript"></script>
+  <script src="index.js" type="text/javascript"></script>
+</body>
+
+</html>
