@@ -1,5 +1,9 @@
 .form-control {
   display: inline-block;
    width: 250px;
+  margin-top: 20px;
+}
+
+#search {
   margin-top: 50px;
 }

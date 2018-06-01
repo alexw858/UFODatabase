@@ -18,15 +18,40 @@
         <p>Browse reports of UFO sightings by date, city, state, country, shape, and duration.</p> 
     </div>
     <div class="row">
-      <!-- <div class="col-md-4"> -->
-        <div class="form-group">
-          <input type="text" class="form-control col-md-4" id="date" placeholder="Date">
-          <input type="text" class="form-control col-md-4" id="city" placeholder="City">
-          <input type="text" class="form-control col-md-4" id="state" placeholder="State">
-          <input type="text" class="form-control col-md-4" id="country" placeholder="Country">
-          <input type="text" class="form-control col-md-4" id="shape" placeholder="Shape">
-          <input type="text" class="form-control col-md-4" id="durationMinutes" placeholder="Duration in Minutes">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <input type="text" class="form-control" id="date" placeholder="Date">
+          </div>
         </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <input type="text" class="form-control col-md-2" id="city" placeholder="City">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <input type="text" class="form-control col-md-2" id="state" placeholder="State">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <input type="text" class="form-control col-md-2" id="country" placeholder="Country">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <input type="text" class="form-control col-md-2" id="shape" placeholder="Shape">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <input type="text" class="form-control col-md-2" id="durationMinutes" placeholder="Duration in Minutes">
+          </div>
+        </div>
+      </div>
     </div>
     <div class="row">
         <div class="form-group">
@@ -50,6 +75,12 @@
           <tbody>
           </tbody>
         </table>
+      </div>
+    </div>
+    <!-- load more button -->
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3 text-center">
+        <button id="load-btn" class="btn btn-primary">Next Page</button>
       </div>
     </div>
       <!-- pagination stuff -->
