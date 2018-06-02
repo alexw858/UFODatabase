@@ -9,6 +9,7 @@ var $durationMinutesInput = document.querySelector("#durationMinutes");
 var $searchBtn = document.querySelector("#search");
 
 var $loadMoreBtn = document.querySelector("#load-btn");
+var $loadPrevBtn = document.querySelector("#prev-btn");
 
 // Set a startingIndex and resultsPerPage variable
 var startingIndex = 0;
@@ -21,41 +22,10 @@ var filteredData = dataSet;
 // Add an event listener to the searchBtn, call handleSearchButtonClick when clicked
 $searchBtn.addEventListener("click", handleSearchButtonClick);
 
-// Add an event listener to the loadMoreBtn, call handleButtonClick when clicked
-// console.log("startingIndex = ", startingIndex);
-// console.log("resultsPerPage = ", resultsPerPage);
-// console.log("filteredData = ", filteredData);
-// console.log("filteredDataLength = ", filteredData.length);
-// if (startingIndex + resultsPerPage >= filteredData.length) {
-//   $loadMoreBtn.classList.add("disabled");
-//   $loadMoreBtn.innerText = "Add Data Loaded";
-//   $loadMoreBtn.removeEventListener("click", handleButtonClick);}
-// else {
-// $loadMoreBtn.addEventListener("click", handleButtonClick);
-// }
+// Add an event listener to the loadMoreBtn, call handleNextButtonClick when clicked
+$loadMoreBtn.addEventListener("click", handleNextButtonClick);
 
-$loadMoreBtn.addEventListener("click", handleButtonClick);
-
-
-// renderTable renders the filteredData to the tbody
-// THIS is where I will likely specify how many results per page
-// function renderTable() {
-//   $tbody.innerHTML = "";
-//   for (var i = 0; i < filteredData.length; i++) {
-//     // Get the current data object and its fields
-//     var currentData = filteredData[i];
-//     var fields = Object.keys(currentData);
-//     // console.log("fields = ", fields)
-//     // Create a new row in the tbody, set the index to be i + startingIndex
-//     var $row = $tbody.insertRow(i);
-//     for (var j = 0; j < fields.length; j++) {
-//       // For every field in the data object, create a new cell at set its inner text to be the current value at the current data's field
-//       var field = fields[j];
-//       var $cell = $row.insertCell(j);
-//       $cell.innerText = currentData[field];
-//     }
-//   }
-// }
+$loadPrevBtn.addEventListener("click", handlePrevButtonClick);
 
 // Render 50 results at a time
 function renderTableSection() {
@@ -65,34 +35,50 @@ function renderTableSection() {
   for (var i=0; i<dataSubset.length; i++) {
     var currentData = dataSubset[i];
     var fields = Object.keys(currentData);
-    console.log("tableStartingIndex = ", startingIndex);
     // var $row = $tbody.insertRow(i + startingIndex);
     var $row = $tbody.insertRow(i);
-    // console.log("$row = ", $row);
     for (var j=0; j<fields.length; j++) {
       var field = fields[j];
       var $cell = $row.insertCell(j);
       $cell.innerText = currentData[field];
     }
   }
-  if (startingIndex + resultsPerPage >= filteredData.length) {
-  // if (filteredData.length <= 50) {
+  console.log("tableStartingIndex = ", startingIndex);
+  console.log("tableEndingIndex = ", endingIndex);
+  console.log("tableFilteredDataLength = ", filteredData.length)
+  // Removes functionality from loadMoreBtn if there is no more data to load
+  if (endingIndex >= filteredData.length) {
+    $loadMoreBtn.removeEventListener("click", handleNextButtonClick);
     $loadMoreBtn.classList.add("disabled");
-    $loadMoreBtn.innerText = "All Data Loaded";
-    $loadMoreBtn.removeEventListener("click", handleButtonClick);
+  }
+  // Removes functionality from loadPrevBtn if there is no previous data
+  if (startingIndex < resultsPerPage) {
+    $loadPrevBtn.removeEventListener("click", handlePrevButtonClick);
+    $loadPrevBtn.classList.add("disabled");
+  }
+
+  // Check to see if the more button needs to have an event listener re-added and disabled status removed
+  if (startingIndex + resultsPerPage < filteredData.length) {
+    $loadMoreBtn.addEventListener("click", handleNextButtonClick);
+    $loadMoreBtn.classList.remove("disabled");
+  }
+  // Check to see if the previous button needs to have an event listener re-added and disabled status removed
+  if (startingIndex >= resultsPerPage) {
+    $loadPrevBtn.addEventListener("click", handlePrevButtonClick);
+    $loadPrevBtn.classList.remove("disabled");
   }
 }
 
-function handleButtonClick() {
+function handleNextButtonClick() {
   startingIndex += resultsPerPage;
-  console.log("buttonStartingIndex = ", startingIndex);
+  console.log("pageButtonStartingIndex = ", startingIndex);
   renderTableSection();
-  // Checks to see if there are more results to render (won't run unless the button is clicked)
-  if (startingIndex + resultsPerPage >= filteredData.length) {
-    $loadMoreBtn.classList.add("disabled");
-    $loadMoreBtn.innerText = "All Data Loaded";
-    $loadMoreBtn.removeEventListener("click", handleButtonClick);
-  }
+}
+
+function handlePrevButtonClick() {
+  // go back a page
+  startingIndex -= resultsPerPage;
+  renderTableSection();
 }
 function handleSearchButtonClick() {
   // Format the user's search by removing leading and trailing whitespace, lowercase the string
@@ -102,6 +88,9 @@ function handleSearchButtonClick() {
   var filterCountry = $countryInput.value.trim().toLowerCase();
   var filterShape = $shapeInput.value.trim().toLowerCase();
   var filterDurationMinutes = $durationMinutesInput.value.trim().toLowerCase();
+
+  // Reset startingIndex to 0 when search button is clicked (clicking the next page button no longer affects future searches)
+  startingIndex = 0
 
   // Set filteredData to an array of all current data whose "state" matches the filter
   filteredData = dataSet.filter(function (currentData) {
@@ -119,8 +108,9 @@ function handleSearchButtonClick() {
     }
     return false;
   });
-  console.log("filteredData = ", filteredData);
-  console.log("filteredDataLength = ", filteredData.length);
+  console.log("searchButtonStartingIndex = ", startingIndex)
+  // console.log("searchButtonFilteredData = ", filteredData);
+  console.log("searchButtonFilteredDataLength = ", filteredData.length);
   renderTableSection();
 }
 
@@ -128,4 +118,4 @@ function handleSearchButtonClick() {
 renderTableSection();
 
 
-// fields =  (7) ["datetime", "city", "state", "country", "shape", "durationMinutes", "comments"]
+//console.log(fields): fields =  (7) ["datetime", "city", "state", "country", "shape", "durationMinutes", "comments"]
